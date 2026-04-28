@@ -1,0 +1,40 @@
+# Virtual env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Secrets and local env (never commit)
+.env
+.env.*
+!.env.example
+
+# App runtime data (local DB and uploads)
+*.db
+.uploads/
+
+# appctl local dir — may contain tokens in schema metadata, keychain refs, machine-specific config
+.appctl/
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
