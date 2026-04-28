@@ -1,9 +1,22 @@
 #!/usr/bin/env python3
 """Seed sample users, projects, tasks, and related data. Requires the API at BASE."""
 
+import os
+import sys
+
 import httpx
 
-BASE = "http://localhost:8000"
+BASE = os.environ.get("TASK_API_BASE", "http://localhost:8000")
+DEMO_PASSWORD = os.environ.get("TASK_DEMO_PASSWORD")
+if not DEMO_PASSWORD:
+    print(
+        "Set TASK_DEMO_PASSWORD to the password used for demo users (same value Alice and Bob).\n"
+        "Example: export TASK_DEMO_PASSWORD='your-local-only-password'\n"
+        "Then: python demo.py",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
 client = httpx.Client(base_url=BASE, timeout=10)
 
 
@@ -18,21 +31,21 @@ print("\nRegistering users...")
 alice = pr("register alice", client.post("/auth/register", json={
     "username": "alice",
     "email": "alice@example.com",
-    "password": "secret123",
+    "password": DEMO_PASSWORD,
     "full_name": "Alice Wonderland",
 })).json()
 
 bob = pr("register bob", client.post("/auth/register", json={
     "username": "bob",
     "email": "bob@example.com",
-    "password": "secret123",
+    "password": DEMO_PASSWORD,
     "full_name": "Bob Builder",
 })).json()
 
 print("\nLogging in...")
 tok = pr("login", client.post("/auth/token", data={
     "username": "alice",
-    "password": "secret123",
+    "password": DEMO_PASSWORD,
 })).json()
 
 token = tok["access_token"]

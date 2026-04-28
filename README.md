@@ -9,9 +9,10 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-Optional seed data (needs the server running):
+Optional seed data (needs the server running). Passwords are not hardcoded; set a local-only value:
 
 ```bash
+export TASK_DEMO_PASSWORD='your-local-password'
 python demo.py
 ```
 
@@ -48,5 +49,7 @@ Use `appctl setup` or `--app-dir` if you keep config under this repo’s `.appct
 | `TOKEN_EXPIRE_MINUTES` | `60` | Access token lifetime |
 | `UPLOAD_DIR` | `.uploads` | Attachment files |
 | `DB_PATH` | `appctl_test.db` | SQLite path |
+| `TASK_DEMO_PASSWORD` | — | Required for `demo.py`; demo user password |
+| `TASK_API_BASE` | `http://localhost:8000` | Override API base URL for `demo.py` |
 
 Set `SECRET_KEY` in production.
